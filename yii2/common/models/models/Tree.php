@@ -87,4 +87,10 @@ class Tree extends RArTree
     {
         return $this->hasOne(NodeContent::className(), ['tree_ref' => 'id']);
     }
+
+    public function getNodeContents()
+    {
+        return $this->hasMany(NodeContent::className(), ['tree_ref' => 'id']);
+    }
+
 }

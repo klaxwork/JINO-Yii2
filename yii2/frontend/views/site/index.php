@@ -16,7 +16,7 @@ $this->title = 'My Yii Application';
     print_r('!!!');
     $x = Tree::find()->with('nodeContent')->where('id = :id', [':id' => 1])->one();
     M::printr($x, '$x');
-
+    M::printr($x->nodeContent, '$x->nodeContent');
     ?>
 
     <div class="jumbotron">
