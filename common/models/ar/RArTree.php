@@ -11,14 +11,17 @@ use Yii;
  * @property integer $ns_tree_ref
  * @property integer $ns_left_key
  * @property integer $ns_right_key
+ * @property integer $ns_level
+ * @property string $node_name
  * @property string $dt_created
  * @property string $dt_updated
  * @property string $alias
  * @property string $title
  * @property string $description
  *
- * @property Tree $nsTreeRef
- * @property Tree[] $rArTrees
+ * @property NodeContent[] $nodeContents
+ * @property RArTree $nsTreeRef
+ * @property RArTree[] $rArTrees
  */
 class RArTree extends \yii\db\ActiveRecord
 {
@@ -36,12 +39,12 @@ class RArTree extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'ns_tree_ref', 'ns_left_key', 'ns_right_key'], 'integer'],
+            [['id', 'ns_level'], 'required'],
+            [['id', 'ns_tree_ref', 'ns_left_key', 'ns_right_key', 'ns_level'], 'integer'],
             [['dt_created', 'dt_updated'], 'safe'],
             [['description'], 'string'],
-            [['alias', 'title'], 'string', 'max' => 255],
-            [['ns_tree_ref'], 'exist', 'skipOnError' => true, 'targetClass' => Tree::className(), 'targetAttribute' => ['ns_tree_ref' => 'id']],
+            [['node_name', 'alias', 'title'], 'string', 'max' => 255],
+            [['ns_tree_ref'], 'exist', 'skipOnError' => true, 'targetClass' => RArTree::className(), 'targetAttribute' => ['ns_tree_ref' => 'id']],
         ];
     }
 
@@ -55,6 +58,8 @@ class RArTree extends \yii\db\ActiveRecord
             'ns_tree_ref' => 'Ns Tree Ref',
             'ns_left_key' => 'Ns Left Key',
             'ns_right_key' => 'Ns Right Key',
+            'ns_level' => 'Ns Level',
+            'node_name' => 'Node Name',
             'dt_created' => 'Dt Created',
             'dt_updated' => 'Dt Updated',
             'alias' => 'Alias',
@@ -66,9 +71,17 @@ class RArTree extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getNodeContents()
+    {
+        return $this->hasMany(NodeContent::className(), ['tree_ref' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getNsTreeRef()
     {
-        return $this->hasOne(Tree::className(), ['id' => 'ns_tree_ref']);
+        return $this->hasOne(RArTree::className(), ['id' => 'ns_tree_ref']);
     }
 
     /**
@@ -76,6 +89,6 @@ class RArTree extends \yii\db\ActiveRecord
      */
     public function getRArTrees()
     {
-        return $this->hasMany(Tree::className(), ['ns_tree_ref' => 'id']);
+        return $this->hasMany(RArTree::className(), ['ns_tree_ref' => 'id']);
     }
 }
