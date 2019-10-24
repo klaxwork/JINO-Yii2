@@ -20,7 +20,6 @@ use common\models\ar\RArTree;
  * @property string $title
  * @property string $description
  *
- * @property NodeContent[] $nodeContents
  * @property RArTree $nsTreeRef
  * @property RArTree[] $rArTrees
  */
