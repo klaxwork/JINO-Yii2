@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="df75ecd8-b5a6-4109-85a0-10a02a107675" name="JINO" url="http://klaxwork.myjino.ru">
+      <webServer id="df75ecd8-b5a6-4109-85a0-10a02a107675" name="JINO (project level)" url="http://klaxwork.myjino.ru">
         <fileTransfer host="klaxwork.myjino.ru" port="21" rootFolder="/domains">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
