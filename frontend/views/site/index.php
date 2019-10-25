@@ -14,9 +14,9 @@ $this->title = 'My Yii Application';
     M::printr($theme, '$theme');
 
     print_r('!!!');
-    $x = Tree::find()->with('nodeContent')->where('id = :id', [':id' => 1])->one();
-    M::printr($x, '$x');
-    M::printr($x->nodeContent, '$x->nodeContent');
+    //$x = Tree::find()->with('nodeContent')->where('id = :id', [':id' => 1])->one();
+    //M::printr($x, '$x');
+    //M::printr($x->nodeContent, '$x->nodeContent');
     ?>
 
     <div class="jumbotron">

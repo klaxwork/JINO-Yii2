@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\ar;
+namespace common\models\models;
 
 use Yii;
 use common\models\ar\RArTree;
@@ -39,24 +39,11 @@ class Tree extends RArTree
     public function rules()
     {
         return [
-            [['id', 'ns_level'], 'required'],
             [['id', 'ns_tree_ref', 'ns_left_key', 'ns_right_key', 'ns_level'], 'integer'],
             [['dt_created', 'dt_updated'], 'safe'],
             [['description'], 'string'],
             [['node_name', 'alias', 'title'], 'string', 'max' => 255],
             [['ns_tree_ref'], 'exist', 'skipOnError' => true, 'targetClass' => RArTree::className(), 'targetAttribute' => ['ns_tree_ref' => 'id']],
-        ];
-    }
-
-    public function behaviors() {
-        return [
-            'tree' => [
-                'class' => NestedSetsBehavior::className(),
-                 'treeAttribute' => 'ns_tree_ref',
-                 'leftAttribute' => 'ns_left_key',
-                 'rightAttribute' => 'ns_right_key',
-                 'depthAttribute' => 'ns_level',
-            ],
         ];
     }
 

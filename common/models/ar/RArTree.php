@@ -3,7 +3,8 @@
 namespace common\models\ar;
 
 use Yii;
-
+use creocoder\nestedsets\NestedSetsBehavior;
+use common\models\ar;
 /**
  * This is the model class for table "tree".
  *
@@ -66,6 +67,31 @@ class RArTree extends \yii\db\ActiveRecord
             'title' => 'Title',
             'description' => 'Description',
         ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'tree' => [
+                'class' => NestedSetsBehavior::className(),
+                'treeAttribute' => 'ns_tree_ref',
+                'leftAttribute' => 'ns_left_key',
+                'rightAttribute' => 'ns_right_key',
+                'depthAttribute' => 'ns_level',
+            ],
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    public static function find()
+    {
+        return new TreeQuery(get_called_class());
     }
 
     /**

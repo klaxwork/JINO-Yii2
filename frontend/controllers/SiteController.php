@@ -1,8 +1,10 @@
 <?php
+
 namespace frontend\controllers;
 
 use frontend\components\FrontendController;
 use common\models\models\Users;
+use common\models\models\Tree;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -15,6 +17,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models;
+use creocoder\nestedsets\NestedSetsBehavior;
 
 /**
  * Site controller
@@ -80,7 +84,14 @@ class SiteController extends FrontendController
         $x = Users::find()->all();
         //print_r($x);
         //M::printr($x, '$x');
+        //$root = new Tree(['node_name' => 'root1']);
+        //$root->makeroot();
 
+        $root = Tree::find()->where(['id' => 1])->roots()->one();
+        M::printr($root, '$root');
+        //$t2 = new Tree(['node_name' => 'aaa2']);
+        //$t2->appendTo($root);
+        //M::printr($t2);
 
         return $this->render('index');
     }
